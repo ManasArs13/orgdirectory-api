@@ -22,13 +22,13 @@ class NearbyOrganizationsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'lat' => 'required|numeric|between:-90,90',
-            'lng' => 'required|numeric|between:-180,180',
+            'lat' => 'required_with:lng,radius|numeric|between:-90,90',
+            'lng' => 'required_with:lat,radius|numeric|between:-180,180',
             'radius' => 'nullable|numeric|min:0',
-            'ne_lat' => 'nullable|numeric|between:-90,90',
-            'ne_lng' => 'nullable|numeric|between:-180,180',
-            'sw_lat' => 'nullable|numeric|between:-90,90',
-            'sw_lng' => 'nullable|numeric|between:-180,180',
+            'ne_lat' => 'required_with:ne_lng,sw_lat,sw_lng|numeric|between:-90,90',
+            'ne_lng' => 'required_with:ne_lat,sw_lat,sw_lng|numeric|between:-180,180',
+            'sw_lat' => 'required_with:ne_lat,ne_lng,sw_lng|numeric|between:-90,90',
+            'sw_lng' => 'required_with:ne_lat,ne_lng,sw_lat|numeric|between:-180,180',
         ];
     }
 
@@ -38,9 +38,9 @@ class NearbyOrganizationsRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'lat.required' => 'Широта (lat) обязательна для поиска',
+            'lat' => 'Широта (lat) обязательна для поиска',
             'lat.between' => 'Широта должна быть между -90 и 90 градусами',
-            'lng.required' => 'Долгота (lng) обязательна для поиска',
+            'lng' => 'Долгота (lng) обязательна для поиска',
             'lng.between' => 'Долгота должна быть между -180 и 180 градусами',
             'radius.min' => 'Радиус не может быть отрицательным',
         ];
@@ -52,13 +52,20 @@ class NearbyOrganizationsRequest extends FormRequest
     public function withValidator(Validator $validator)
     {
         $validator->after(function ($validator) {
-            if (
-                $this->hasAny(['ne_lat', 'ne_lng', 'sw_lat', 'sw_lng']) &&
-                !$this->hasAll(['ne_lat', 'ne_lng', 'sw_lat', 'sw_lng'])
-            ) {
+            $hasRadiusParams = $this->filled(['lat', 'lng']);
+            $hasBoundsParams = $this->filled(['ne_lat', 'ne_lng', 'sw_lat', 'sw_lng']);
+
+            if (!$hasRadiusParams && !$hasBoundsParams) {
                 $validator->errors()->add(
-                    'bounds',
-                    'Для поиска по области необходимо указать все 4 координаты (ne_lat, ne_lng, sw_lat, sw_lng)'
+                    'parameters',
+                    'Необходимо указать либо (lat, lng, [radius]), либо (ne_lat, ne_lng, sw_lat, sw_lng)'
+                );
+            }
+
+            if ($hasRadiusParams && $hasBoundsParams) {
+                $validator->errors()->add(
+                    'parameters',
+                    'Используйте только один метод поиска: по радиусу ИЛИ по прямоугольной области'
                 );
             }
         });

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class FindOrganizationsNearbyAction
 {
-    public function execute(float $lat, float $lng, ?float $radius = null, ?array $bounds = null)
+    public function execute(?float $lat = null, ?float $lng = null, ?float $radius = null, ?array $bounds = null)
     {
         $query = Organization::query();
 
