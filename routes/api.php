@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::name('api.')->group(function () {
+Route::middleware('api.key')->name('api.')->group(function () {
     // Получить организации в здании
     Route::get('/buildings/{building}/organizations', [OrganizationController::class, 'byBuilding']);
 
