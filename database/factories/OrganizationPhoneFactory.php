@@ -18,6 +18,8 @@ class OrganizationPhoneFactory extends Factory
     {
         return [
             'phone' => $this->generatePhoneNumber(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 

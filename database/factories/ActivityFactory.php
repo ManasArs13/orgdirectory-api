@@ -20,6 +20,8 @@ class ActivityFactory extends Factory
         return [
             'name' => $this->faker->unique()->word(),
             'parent_id' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 

@@ -21,6 +21,8 @@ class OrganizationFactory extends Factory
         return [
             'name' => $this->faker->company(),
             'building_id' => Building::factory(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 

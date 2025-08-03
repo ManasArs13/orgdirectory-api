@@ -20,6 +20,8 @@ class BuildingFactory extends Factory
             'address' => $this->faker->address(),
             'latitude' => $this->faker->latitude(),
             'longitude' => $this->faker->longitude(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }
