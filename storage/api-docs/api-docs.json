@@ -340,66 +340,160 @@
     "components": {
         "schemas": {
             "ActivityResource": {
+                "description": "Ресурс вида деятельности",
                 "properties": {
                     "id": {
-                        "type": "integer"
+                        "description": "ID вида деятельности",
+                        "type": "integer",
+                        "example": 1
                     },
                     "name": {
-                        "type": "string"
+                        "description": "Название вида деятельности",
+                        "type": "string",
+                        "example": "Мясная продукция"
                     },
                     "parent_id": {
+                        "description": "ID родительской категории (null для корневых категорий)",
                         "type": "integer",
+                        "example": 5,
                         "nullable": true
+                    },
+                    "level": {
+                        "description": "Уровень вложенности (если включено вычисление)",
+                        "type": "integer",
+                        "example": 2,
+                        "nullable": true
+                    },
+                    "organizations_count": {
+                        "description": "Количество связанных организаций (если включен подсчет)",
+                        "type": "integer",
+                        "example": 15,
+                        "nullable": true
+                    },
+                    "children": {
+                        "description": "Дочерние категории (если включена загрузка)",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ActivityResource"
+                        },
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "description": "Дата создания",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2023-01-01 12:00:00"
+                    },
+                    "updated_at": {
+                        "description": "Дата последнего обновления",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2023-01-01 12:00:00"
                     }
                 },
                 "type": "object"
             },
             "BuildingResource": {
+                "description": "Ресурс здания",
                 "properties": {
                     "id": {
-                        "type": "integer"
+                        "description": "ID здания",
+                        "type": "integer",
+                        "example": 1
                     },
                     "address": {
-                        "type": "string"
+                        "description": "Полный адрес здания",
+                        "type": "string",
+                        "example": "г. Москва, ул. Ленина, 1"
                     },
                     "coordinates": {
+                        "description": "Географические координаты",
                         "properties": {
                             "latitude": {
+                                "description": "Широта",
                                 "type": "number",
-                                "format": "float"
+                                "format": "float",
+                                "example": 55.755826
                             },
                             "longitude": {
+                                "description": "Долгота",
                                 "type": "number",
-                                "format": "float"
+                                "format": "float",
+                                "example": 37.6173
                             }
                         },
                         "type": "object"
+                    },
+                    "organizations_count": {
+                        "description": "Количество организаций в здании (если включен подсчет)",
+                        "type": "integer",
+                        "example": 5,
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "description": "Дата создания записи",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2023-01-01 12:00:00"
+                    },
+                    "updated_at": {
+                        "description": "Дата последнего обновления",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2023-01-01 12:00:00"
                     }
                 },
                 "type": "object"
             },
             "OrganizationResource": {
+                "description": "Ресурс организации",
                 "properties": {
                     "id": {
-                        "type": "integer"
+                        "description": "ID организации",
+                        "type": "integer",
+                        "example": 1
                     },
                     "name": {
-                        "type": "string"
+                        "description": "Название организации",
+                        "type": "string",
+                        "example": "ООО Рога и Копыта"
+                    },
+                    "phones": {
+                        "description": "Телефоны организации",
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": "+7 123 456-78-90"
+                        }
                     },
                     "building": {
-                        "$ref": "#/components/schemas/BuildingResource"
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/BuildingResource"
+                            }
+                        ],
+                        "nullable": true,
+                        "description": "Здание, в котором находится организация (если включена загрузка)"
                     },
                     "activities": {
+                        "description": "Виды деятельности организации (если включена загрузка)",
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/ActivityResource"
-                        }
+                        },
+                        "nullable": true
                     },
-                    "phones": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
+                    "created_at": {
+                        "description": "Дата создания записи",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2023-01-01 12:00:00"
+                    },
+                    "updated_at": {
+                        "description": "Дата последнего обновления",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2023-01-01 12:00:00"
                     }
                 },
                 "type": "object"
