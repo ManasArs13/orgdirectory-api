@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Organization extends Model
 {
     use HasFactory;
+
+    protected $with = ['building', 'activities', 'phones'];
     
     protected $fillable = ['name', 'building_id'];
 

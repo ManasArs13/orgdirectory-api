@@ -16,7 +16,7 @@ class Activity extends Model
     public const MAX_DEPTH = 3; // Максимальная глубина вложенности
 
     protected $fillable = ['name', 'parent_id'];
-        
+
     protected static function booted()
     {
         static::saving(function (Activity $activity) {
@@ -28,35 +28,23 @@ class Activity extends Model
         });
     }
 
-    /**
-     * Получить все родительские категории
-     */
-    public function getAncestors(): \Illuminate\Support\Collection
-    {
-        $ancestors = collect();
-        $current = $this->parent;
-
-        while ($current) {
-            $ancestors->push($current);
-            $current = $current->parent;
-        }
-
-        return $ancestors;
-    }
 
     /**
      * Получить все дочерние категории (включая вложенные)
      */
-    public function getDescendants(): \Illuminate\Support\Collection
+    public function getDescendantsAndSelf()
     {
-        $descendants = collect();
-
-        foreach ($this->children as $child) {
-            $descendants->push($child);
-            $descendants = $descendants->merge($child->getDescendants());
-        }
-
-        return $descendants;
+        return $this->newQuery()
+            ->where(function ($query) {
+                $query->where('id', $this->id)
+                    ->orWhere('parent_id', $this->id)
+                    ->orWhereIn('parent_id', function ($q) {
+                        $q->select('id')
+                            ->from('activities')
+                            ->where('parent_id', $this->id);
+                    });
+            })
+            ->get();
     }
 
     /**
@@ -77,19 +65,6 @@ class Activity extends Model
         }
 
         return $depth;
-    }
-
-    /**
-     * Проверить, является ли категория корневой
-     */
-    public function isRoot(): bool
-    {
-        return $this->parent_id === null;
-    }
-
-    public static function roots()
-    {
-        return static::whereNull('parent_id');
     }
 
     public function parent(): BelongsTo
