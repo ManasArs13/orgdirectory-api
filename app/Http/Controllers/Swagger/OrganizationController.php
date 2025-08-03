@@ -36,6 +36,10 @@ class OrganizationController extends Controller
      *     @OA\Response(
      *         response=401,
      *         description="Неверный API ключ"
+     *     ),
+     *     @OA\Response(
+     *         response=501,
+     *         description="Статический ключ не сгенерирован, используйте команду php artisan app:set-api-key"
      *     )
      * )
      */
@@ -61,6 +65,14 @@ class OrganizationController extends Controller
      *             type="array",
      *             @OA\Items(ref="#/components/schemas/OrganizationResource")
      *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Неверный API ключ"
+     *     ),
+     *     @OA\Response(
+     *         response=501,
+     *         description="Статический ключ не сгенерирован, используйте команду php artisan app:set-api-key"
      *     )
      * )
      */
@@ -123,6 +135,14 @@ class OrganizationController extends Controller
      *             type="array",
      *             @OA\Items(ref="#/components/schemas/OrganizationResource")
      *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Неверный API ключ"
+     *     ),
+     *     @OA\Response(
+     *         response=501,
+     *         description="Статический ключ не сгенерирован, используйте команду php artisan app:set-api-key"
      *     )
      * )
      */
@@ -145,6 +165,14 @@ class OrganizationController extends Controller
      *         response=200,
      *         description="Данные организации",
      *         @OA\JsonContent(ref="#/components/schemas/OrganizationResource")
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Неверный API ключ"
+     *     ),
+     *     @OA\Response(
+     *         response=501,
+     *         description="Статический ключ не сгенерирован, используйте команду php artisan app:set-api-key"
      *     )
      * )
      */
@@ -170,6 +198,14 @@ class OrganizationController extends Controller
      *             type="array",
      *             @OA\Items(ref="#/components/schemas/OrganizationResource")
      *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Неверный API ключ"
+     *     ),
+     *     @OA\Response(
+     *         response=501,
+     *         description="Статический ключ не сгенерирован, используйте команду php artisan app:set-api-key"
      *     )
      * )
      */
@@ -195,6 +231,14 @@ class OrganizationController extends Controller
      *             type="array",
      *             @OA\Items(ref="#/components/schemas/OrganizationResource")
      *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Неверный API ключ"
+     *     ),
+     *     @OA\Response(
+     *         response=501,
+     *         description="Статический ключ не сгенерирован, используйте команду php artisan app:set-api-key"
      *     )
      * )
      */

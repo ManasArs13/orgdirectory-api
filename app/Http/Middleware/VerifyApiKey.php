@@ -19,7 +19,7 @@ class VerifyApiKey
 
         if ($apiKey !== env('API_KEY')) {
             return response()->json([
-                'message' => $apiKey ? 'Неверный API ключ' : 'Остутсвует API ключ'
+                'message' => 'Неверный API ключ'
             ], 401);
         }
 

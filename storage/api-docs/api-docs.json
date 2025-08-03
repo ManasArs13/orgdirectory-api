@@ -40,6 +40,9 @@
                     },
                     "401": {
                         "description": "Неверный API ключ"
+                    },
+                    "501": {
+                        "description": "Статический ключ не сгенерирован, используйте команду php artisan app:set-api-key"
                     }
                 },
                 "security": [
@@ -80,6 +83,12 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Неверный API ключ"
+                    },
+                    "501": {
+                        "description": "Статический ключ не сгенерирован, используйте команду php artisan app:set-api-key"
                     }
                 },
                 "security": [
@@ -177,6 +186,12 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Неверный API ключ"
+                    },
+                    "501": {
+                        "description": "Статический ключ не сгенерирован, используйте команду php artisan app:set-api-key"
                     }
                 },
                 "security": [
@@ -214,6 +229,12 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Неверный API ключ"
+                    },
+                    "501": {
+                        "description": "Статический ключ не сгенерирован, используйте команду php artisan app:set-api-key"
                     }
                 },
                 "security": [
@@ -254,6 +275,12 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Неверный API ключ"
+                    },
+                    "501": {
+                        "description": "Статический ключ не сгенерирован, используйте команду php artisan app:set-api-key"
                     }
                 },
                 "security": [
@@ -294,6 +321,12 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Неверный API ключ"
+                    },
+                    "501": {
+                        "description": "Статический ключ не сгенерирован, используйте команду php artisan app:set-api-key"
                     }
                 },
                 "security": [
