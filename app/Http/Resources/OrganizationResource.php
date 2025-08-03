@@ -5,6 +5,28 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @OA\Schema(
+ *     schema="OrganizationResource",
+ *     type="object",
+ *     @OA\Property(property="id", type="integer"),
+ *     @OA\Property(property="name", type="string"),
+ *     @OA\Property(
+ *         property="building",
+ *         ref="#/components/schemas/BuildingResource"
+ *     ),
+ *     @OA\Property(
+ *         property="activities",
+ *         type="array",
+ *         @OA\Items(ref="#/components/schemas/ActivityResource")
+ *     ),
+ *     @OA\Property(
+ *         property="phones",
+ *         type="array",
+ *         @OA\Items(type="string")
+ *     )
+ * )
+ */
 class OrganizationResource extends JsonResource
 {
     /**

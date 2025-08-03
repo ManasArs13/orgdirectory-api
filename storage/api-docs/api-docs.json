@@ -1,0 +1,389 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Справочник организаций API",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/": {},
+        "/api/buildings/{building}/organizations": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Организации в конкретном здании",
+                "operationId": "5fe0a70c8a6873989b702f597454204d",
+                "parameters": [
+                    {
+                        "name": "building",
+                        "in": "path",
+                        "description": "ID здания",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Список организаций",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/OrganizationResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неверный API ключ"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/api/activities/{activity}/organizations": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Организации по виду деятельности",
+                "operationId": "c20cc2b4920f4908de95d51df6724760",
+                "parameters": [
+                    {
+                        "name": "activity",
+                        "in": "path",
+                        "description": "ID вида деятельности",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Список организаций",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/OrganizationResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/api/organizations/nearby": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Организации в географической области",
+                "operationId": "5663d5ea1a263aeb5703e9124c3a8daf",
+                "parameters": [
+                    {
+                        "name": "lat",
+                        "in": "query",
+                        "description": "Широта центра",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "format": "float"
+                        }
+                    },
+                    {
+                        "name": "lng",
+                        "in": "query",
+                        "description": "Долгота центра",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "format": "float"
+                        }
+                    },
+                    {
+                        "name": "radius",
+                        "in": "query",
+                        "description": "Радиус поиска в км",
+                        "schema": {
+                            "type": "number",
+                            "format": "float",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "ne_lat",
+                        "in": "query",
+                        "description": "Северо-восточная широта (для прямоугольной области)",
+                        "schema": {
+                            "type": "number",
+                            "format": "float"
+                        }
+                    },
+                    {
+                        "name": "ne_lng",
+                        "in": "query",
+                        "description": "Северо-восточная долгота (для прямоугольной области)",
+                        "schema": {
+                            "type": "number",
+                            "format": "float"
+                        }
+                    },
+                    {
+                        "name": "sw_lat",
+                        "in": "query",
+                        "description": "Юго-западная широта (для прямоугольной области)",
+                        "schema": {
+                            "type": "number",
+                            "format": "float"
+                        }
+                    },
+                    {
+                        "name": "sw_lng",
+                        "in": "query",
+                        "description": "Юго-западная долгота (для прямоугольной области)",
+                        "schema": {
+                            "type": "number",
+                            "format": "float"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Список организаций",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/OrganizationResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/api/organizations/{organization}": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Информация об организации",
+                "operationId": "49f166c3307b1d66811d9311c876528e",
+                "parameters": [
+                    {
+                        "name": "organization",
+                        "in": "path",
+                        "description": "ID организации",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Данные организации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrganizationResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/api/organizations/search/activity/{activity}": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Поиск по дереву видов деятельности",
+                "operationId": "e1eb4b1fcc2c11f1cbf720552225e1e0",
+                "parameters": [
+                    {
+                        "name": "activity",
+                        "in": "path",
+                        "description": "ID корневого вида деятельности",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Список организаций",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/OrganizationResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/api/organizations/search/name/{name}": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Поиск организаций по названию",
+                "operationId": "ad45ff282e9cb97dc48357e6a8449b28",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "Часть названия для поиска",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Список организаций",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/OrganizationResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ActivityResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "parent_id": {
+                        "type": "integer",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "BuildingResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "coordinates": {
+                        "properties": {
+                            "latitude": {
+                                "type": "number",
+                                "format": "float"
+                            },
+                            "longitude": {
+                                "type": "number",
+                                "format": "float"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "OrganizationResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "building": {
+                        "$ref": "#/components/schemas/BuildingResource"
+                    },
+                    "activities": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ActivityResource"
+                        }
+                    },
+                    "phones": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "api_key": {
+                "type": "apiKey",
+                "name": "X-API-KEY",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Organizations",
+            "description": "Операции с организациями"
+        }
+    ]
+}
